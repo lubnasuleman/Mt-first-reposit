@@ -1,6 +1,6 @@
 "use strict"; // treat all js code as newer version  
 
-// alert ( 3 + 3 ) // we are using nodejs not broswer
+// alert ( 3 + 1 ) // we are using nodejs not broswer
 
 console.log(3
     +
@@ -23,4 +23,3 @@ console.log(3
     //object
 
     console.log(typeof "Lubna");
-    
