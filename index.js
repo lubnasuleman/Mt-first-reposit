@@ -11,4 +11,4 @@ accountCity = "Karachi"
 
 console.log("accountId = Bc200414706");
 
-console.table(["accountEmail= lubna@gmail.com", accountPassword = "67890", accountCity = "Karachi"]);
+console.table({accountEmail, accountPassword, accountCity});
