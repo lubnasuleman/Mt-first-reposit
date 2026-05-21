@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies Site</title>
+
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+
+        body{
+            background-color: #222;
+            font-family: sans-serif;
+            margin: 0;
+        }
+
+        h3{
+            color: white;
+        }
+
+        .topnav{
+            overflow: hidden;
+            background-color: #131720;
+            padding: 10px;
+        }
+
+        .topnav a{
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+        }
+
+        .topnav .search-container{
+            float: right;
+        }
+
+        form{
+            background-color: #151f30;
+            width: 300px;
+            height: 43px;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+        }
+
+        input{
+            all: unset;
+            font: 15px system-ui;
+            color: white;
+            height: 100%;
+            width: 100%;
+            padding: 6px 9px;
+        }
+
+        #section{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .column{
+            width: 300px;
+            padding: 10px;
+        }
+
+        .card{
+            border-radius: 19px;
+            padding: 15px;
+            text-align: center;
+            background-color: #151f30;
+        }
+
+        .thumbnail{
+            height: 350px;
+            width: 100%;
+            border-radius: 19px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="topnav">
+        <a class="active" href="#">Movies Site</a>
+
+        <div class="search-container">
+            <form role="search" id="form">
+                <input 
+                    type="search"
+                    id="query"
+                    name="q"
+                    placeholder="Search..."
+                >
+            </form>
+        </div>
+    </div>
+
+    <section id="section"></section>
+
+<script>
+
+const APILINK =
+"https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=7763f5061ef1718facf19bc96fb9211e&page=1";
+
+const IMG_PATH =
+"https://image.tmdb.org/t/p/w1280";
+
+const SEARCHAPI =
+"https://api.themoviedb.org/3/search/movie?api_key=7763f5061ef1718facf19bc96fb9211e&query=";
+
+const main = document.getElementById("section");
+const form = document.getElementById("form");
+const search = document.getElementById("query");
+
+returnMovies(APILINK);
+
+function returnMovies(url){
+
+    fetch(url)
+    .then(res => res.json())
+    .then(data => {
+
+        main.innerHTML = "";
+
+        data.results.forEach(element => {
+
+            const div_column = document.createElement("div");
+            div_column.setAttribute("class", "column");
+
+            const div_card = document.createElement("div");
+            div_card.setAttribute("class", "card");
+
+            const image = document.createElement("img");
+            image.setAttribute("class", "thumbnail");
+
+            image.src = IMG_PATH + element.poster_path;
+
+            const title = document.createElement("h3");
+            title.innerHTML = element.title;
+
+            div_card.appendChild(image);
+            div_card.appendChild(title);
+
+            div_column.appendChild(div_card);
+
+            main.appendChild(div_column);
+        });
+    });
+}
+
+form.addEventListener("submit", (e) => {
+
+    e.preventDefault();
+
+    const searchItem = search.value;
+
+    if(searchItem){
+
+        returnMovies(SEARCHAPI + searchItem);
+
+        search.value = "";
+    }
+});
+
+</script>
+
+</body>
+</html>
